@@ -1,14 +1,13 @@
 import dotenv from "dotenv";
-import database from "./database";
+import connectToDatabase from "./database";
 import app from "./app";
 
 dotenv.config();
 
-
 app.listen(8080, () => {
   console.log("Listening on port 8080");
 
-  database
+  connectToDatabase(false /* Not in test mode */)
     .then(() => {
       console.log("Connected to mongodb");
     })

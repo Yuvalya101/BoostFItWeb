@@ -56,12 +56,46 @@ export async function loginUser(req: Request, res: Response) {
 }
 
 export async function me(req: Request, res: Response) {
-  const { id } = req.user!;
-  const user = await UserService.findUserById(id);
+  try {
+    const { id } = req.user!;
 
-  res.status(200).json({
-    error: null,
-    message: "fetched user details successfully",
-    data: user,
-  });
+    const user = await UserService.findUserById(id);
+
+    res.status(200).json({
+      error: null,
+      message: "fetched user details successfully",
+      data: user,
+    });
+  } catch (e: any) {
+    res.status(500).json({ error: e, message: e.message, data: null, status: 500 });
+  }
+}
+
+export async function updateUser(req: Request, res: Response) {
+  try {
+    const userId = req.user!.id;
+    const data = req.body;
+    const user = await UserService.updateUser(userId, data);
+    res.status(200).json({
+      error: null,
+      message: "updated user details successfully",
+      data: user,
+    });
+  } catch (e: any) {
+    res.status(400).json({ error: e, message: e.message, data: null, status: 400 });
+  }
+}
+
+export async function deleteUser(req: Request, res: Response) {
+  try {
+    const userId = req.user!.id;
+    const user = await UserService.deleteUser(userId);
+    res.status(200).json({
+      error: null,
+      message: "updated deleted successfully",
+      data: user,
+    });
+  } catch (e: any) {
+    res.status(400).json({ error: e, message: e.message, data: null, status: 400 });
+  }
 }

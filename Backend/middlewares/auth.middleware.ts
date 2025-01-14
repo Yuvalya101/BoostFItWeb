@@ -8,7 +8,7 @@ const authMiddlware: RequestHandler = (req, res, next) => {
     if (!tokenHeader) {
       throw new Error("Token was not provided in request headers");
     }
-
+    
     const token = tokenHeader.substring("Bearer ".length);
     if (!token) {
       throw new Error("Token was not provided in correct format in request headers");
