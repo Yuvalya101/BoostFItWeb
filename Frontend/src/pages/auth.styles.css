@@ -1,0 +1,50 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  background: whitesmoke;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  max-width: 600px;
+  gap: 0.5rem;
+  margin-block: 2rem;
+  margin-inline:auto;
+  align-items: flex-start;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+form input {
+  border: 1px solid lightgray;
+  padding: 0.5rem;
+}
+form div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+form div label {
+  text-align: start;
+  font-weight: bold;
+  margin-block: 0.2rem;
+}
+
+form div span {
+  text-align: start;
+  font-size: 12px;  
+  padding-block:.25rem;
+  padding-left:.2rem;
+  color:red;
+  font-weight:bold;
+  display:block;
+  height:10px;
+  width:325px;
+}
+form input[type="file"] {
+  border: none;
+}
+
+form button {
+  background: #bd3333;
+  width: 100%;
+  color: white;
+  margin-block: 0.5rem;
+}

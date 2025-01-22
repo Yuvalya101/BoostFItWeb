@@ -17,7 +17,6 @@ export async function registerUser(req: Request, res: Response) {
     }
 
     const user = await UserService.createUser(validated);
-
     res.status(201).json({
       error: null,
       message: "User registration successfull",
@@ -47,6 +46,7 @@ export async function loginUser(req: Request, res: Response) {
 
     res.status(200).json({
       error: null,
+      status: 200,
       message: "Login successfull",
       data: token,
     });
@@ -63,6 +63,7 @@ export async function me(req: Request, res: Response) {
 
     res.status(200).json({
       error: null,
+      status: 200,
       message: "fetched user details successfully",
       data: user,
     });

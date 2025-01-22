@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 import { comparePassword, encryptPassword } from "../utils";
 
 export interface User {
@@ -7,6 +7,7 @@ export interface User {
   password: string;
   name: string;
   image: string;
+  posts: ObjectId[];
   comparePassword: (passwordText: string) => boolean;
 }
 
@@ -31,6 +32,7 @@ const UserSchema = new mongoose.Schema<User>(
       default:
         "https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-PNG-Free-File-Download.png",
     },
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "posts" }],
   },
   {
     versionKey: false,
