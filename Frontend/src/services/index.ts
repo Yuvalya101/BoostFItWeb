@@ -7,10 +7,17 @@ export async function post<T, U>(path: string, data: T, headers?:any): Promise<U
       if (Math.floor(res.data.status / 100) !== 2) {
         throw new Error(res.data.message);
       }
+<<<<<<< HEAD
       return res.data.data;
     })
     .catch((e) => {
       throw new Error(e.response.data.message);
+=======
+      return res?.data?.data;
+    })
+    .catch((e) => {
+      throw new Error(e.response?.data.message??e.message);
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
     });
 }
 
@@ -24,7 +31,12 @@ export async function get<U>(path: string): Promise<U> {
       return res.data.data;
     })
     .catch((e) => {
+<<<<<<< HEAD
       throw new Error(e.response.data.message);
+=======
+      console.log(e)
+      throw new Error(e.response?.data.message ?? e.message);
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
     });
 }
 

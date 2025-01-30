@@ -22,8 +22,16 @@ export async function findPostsByUserId(userId: string) {
     .populate({ path: "comments", populate: { path: "user" } });
 }
 
+<<<<<<< HEAD
 export async function createPost(data: PostCreation) {
   return await PostModel.create(data);
+=======
+export async function createPost(data: PostCreation, userId: string) {
+  let post: any = await PostModel.create({ ...data, user: userId });
+  post = await PostModel.findById(post._id).populate("user");
+  await UserModel.findByIdAndUpdate(userId, { $push: { posts: post._id } });
+  return post;
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
 }
 export async function deletePost(id: string) {
   const deleted = await PostModel.findByIdAndDelete(id, { returnOriginal: true });
@@ -33,5 +41,38 @@ export async function deletePost(id: string) {
   await UserModel.findByIdAndUpdate(deleted!.user, { $pull: { posts: deleted!._id } });
 }
 export async function updatePost(id: string, data: PostUpdate) {
+<<<<<<< HEAD
   return await PostModel.findByIdAndUpdate(id, data, { returnOriginal: false });
+=======
+  return await PostModel.findByIdAndUpdate(id, data, { returnOriginal: false }).populate("user");
+}
+export async function commentPost(postId: string, userId: string, content: string) {
+  let comment: any = await CommentsModel.create({ content, user: userId, post: postId });
+  await PostModel.findByIdAndUpdate(
+    postId,
+    { $push: { comments: comment._id } },
+    { returnOriginal: false }
+  );
+  comment = await CommentsModel.findById(comment._id).populate("user");
+  return comment;
+}
+
+export async function likePost(id: string, userId: string) {
+  const post = await PostModel.findByIdAndUpdate(
+    id,
+    { $addToSet: { likes: userId } },
+    { returnOriginal: false }
+  ).populate("user");
+  await UserModel.findByIdAndUpdate(userId, { $addToSet: { likedPosts: post!._id } });
+  return post;
+}
+export async function unlikePost(id: string, userId: string) {
+  const post = await PostModel.findByIdAndUpdate(
+    id,
+    { $pull: { likes: userId } },
+    { returnOriginal: false }
+  ).populate("user");
+  await UserModel.findByIdAndUpdate(userId, { $pull: { likedPosts: post!._id } });
+  return post;
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
 }

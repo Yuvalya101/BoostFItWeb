@@ -5,14 +5,73 @@ import {
 } from "../validation/post.validation";
 import * as PostService from "../services/posts.service";
 
+<<<<<<< HEAD
+=======
+export async function likePost(request: Request, response: Response) {
+  try {
+    const id = request.params.id;
+    const userId = request.user!.id;
+    const post = await PostService.likePost(id, userId);
+    response.status(201).json({
+      error: null,
+      status: 201,
+      message: "Post created successfully",
+      data: post,
+    });
+  } catch (error: any) {
+    response.status(400).json({ error, message: error.message, data: null, status: 400 });
+  }
+}
+
+export async function unlikePost(request: Request, response: Response) {
+  try {
+    const id = request.params.id;
+    const userId = request.user!.id;
+    const post = await PostService.unlikePost(id, userId);
+    response.status(201).json({
+      error: null,
+      status: 201,
+      message: "Post created successfully",
+      data: post,
+    });
+  } catch (error: any) {
+    response.status(400).json({ error, message: error.message, data: null, status: 400 });
+  }
+}
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
 export async function createPost(request: Request, response: Response) {
   try {
     const data = request.body;
     const validatedData = PostCreationValidationScheme.parse(data);
+<<<<<<< HEAD
     const post = await PostService.createPost(validatedData);
     response.status(200).json({
       error: null,
       message: "Post created successfully",
+=======
+    const post = await PostService.createPost(validatedData, request.user!.id);
+    response.status(201).json({
+      error: null,
+      status: 201,
+      message: "Post created successfully",
+      data: post,
+    });
+  } catch (error: any) {
+    response.status(400).json({ error, message: error.message, data: null, status: 400 });
+  }
+}
+
+export async function commentPost(request: Request, response: Response) {
+  try {
+    const postId = request.params.id;
+    const { content } = request.body;
+    const user = request.user!.id;
+    const post = await PostService.commentPost(postId, user, content);
+    response.status(200).json({
+      error: null,
+      status:200,
+      message: "Post updated successfully",
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
       data: post,
     });
   } catch (error: any) {
@@ -28,6 +87,10 @@ export async function updatePost(request: Request, response: Response) {
     const post = await PostService.updatePost(postId, validatedData);
     response.status(200).json({
       error: null,
+<<<<<<< HEAD
+=======
+      status:200,
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
       message: "Post updated successfully",
       data: post,
     });
@@ -42,6 +105,10 @@ export async function deletePost(request: Request, response: Response) {
     const post = await PostService.deletePost(postId);
     response.status(200).json({
       error: null,
+<<<<<<< HEAD
+=======
+      status: 200,
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
       message: "Post deleted successfully",
       data: post,
     });
@@ -55,6 +122,10 @@ export async function getPosts(request: Request, response: Response) {
     const posts = await PostService.findPosts();
     response.status(200).json({
       error: null,
+<<<<<<< HEAD
+=======
+      status: 200,
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
       message: "Posts fetched successfully",
       data: posts,
     });
@@ -69,6 +140,10 @@ export async function getUserPosts(request: Request, response: Response) {
     const posts = await PostService.findPostsByUserId(userId);
     response.status(200).json({
       error: null,
+<<<<<<< HEAD
+=======
+      status: 200,
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
       message: "Posts fetched successfully",
       data: posts,
     });
@@ -83,6 +158,10 @@ export async function getPost(request: Request, response: Response) {
     const post = await PostService.findPostById(postId);
     response.status(200).json({
       error: null,
+<<<<<<< HEAD
+=======
+      status: 200,
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
       message: "Post fetched successfully",
       data: post,
     });

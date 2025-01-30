@@ -63,7 +63,11 @@ export default function Register() {
 
   return (
     <div>
+<<<<<<< HEAD
       <form onSubmit={onSubmitRegister}>
+=======
+      <form  className="auth-form"  onSubmit={onSubmitRegister}>
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
         <div>
           <label>Full name:</label>
           <input required name="name" placeholder="Enter Full name" />

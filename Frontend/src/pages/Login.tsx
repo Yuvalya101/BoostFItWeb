@@ -2,6 +2,10 @@ import { FormEvent, useState } from "react";
 import { UserLoginValidationScheme } from "../validations";
 import { useUser } from "../context/Auth.context";
 import { ZodEffects, ZodError } from "zod";
+<<<<<<< HEAD
+=======
+import { toast } from "react-toastify";
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
 
 export default function Login() {
   const [errors, setErrors] = useState(
@@ -26,6 +30,10 @@ export default function Login() {
     try {
       const validatedData = UserLoginValidationScheme.parse(data);
       await login(validatedData);
+<<<<<<< HEAD
+=======
+      toast("Welcome back!")
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
     } catch (e: any) {
       if (e instanceof ZodError) {
         const newErrors = new Map();
@@ -43,7 +51,11 @@ export default function Login() {
 
   return (
     <div>
+<<<<<<< HEAD
       <form onSubmit={onSubmitLogin}>
+=======
+      <form className="auth-form" onSubmit={onSubmitLogin}>
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
         <div>
           <label>Email address:</label>
           <input name="email" required placeholder="Enter email address" />

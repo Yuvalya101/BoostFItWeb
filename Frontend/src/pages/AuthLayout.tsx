@@ -8,7 +8,11 @@ export default function AuthLayout() {
   const Links = useCallback(() => {
     if (location.pathname.includes("register")) {
       return (
+<<<<<<< HEAD
         <div className="p-2">
+=======
+        <div className="p-2 mx-auto w-fit">
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
           <span>Already have an account?</span>
           <Link to={"/auth/login"} className="px-[2px]">
             Sign in now
@@ -17,7 +21,11 @@ export default function AuthLayout() {
       );
     }
     return (
+<<<<<<< HEAD
       <div className="p-2">
+=======
+      <div className="p-2 mx-auto w-fit">
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
         <span>Don't have an account?</span>
         <Link to={"/auth/register"} className="px-[2px]">
           Create one now
@@ -34,9 +42,13 @@ export default function AuthLayout() {
     }
   }, [user]);
 
+<<<<<<< HEAD
   if(loading) {
     return null
   }
+=======
+  
+>>>>>>> 6d0a7e6ce8f01a1e0014a05ac25cf9e98dd89459
   return (
     <div>
       <div>
