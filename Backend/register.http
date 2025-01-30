@@ -8,3 +8,13 @@ Content-Type: application/json
     "name":"test",
     "password": "123456Aa!"
 }
+
+###
+
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "email": "test@gmail.com",
+    "password": "123456Aa!"
+}
