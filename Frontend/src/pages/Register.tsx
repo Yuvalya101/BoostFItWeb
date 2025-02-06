@@ -67,23 +67,23 @@ export default function Register() {
         <div>
           <label>Full name:</label>
           <input required name="name" placeholder="Enter Full name" />
-          <span>{errors.get("name")}</span>
+          <span className="span">{errors.get("name")}</span>
         </div>
         <div>
           <label>Email address:</label>
           <input required name="email" placeholder="Enter email address" />
-          <span>{errors.get("email")}</span>
+          <span className="span">{errors.get("email")}</span>
         </div>
         <div>
           <label>Password:</label>
           <input required name="password" placeholder="Enter Password" />
-          <span>{errors.get("password")}</span>
+          <span className="span">{errors.get("password")}</span>
         </div>
         <div className="flex flex-col items-start">
           <label>Choose image</label>
           <input ref={imageInputRef} name="image" type="file" />
         </div>
-        <span className="h-[20px] text-center w-fit block mx-auto text-[12px] text-[red] font-bold">
+        <span className="span h-[20px] text-center w-fit block mx-auto text-[12px] text-[red] font-bold">
           {serverError}
         </span>
 

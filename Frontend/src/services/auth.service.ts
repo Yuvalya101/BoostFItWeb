@@ -22,6 +22,9 @@ export async function uploadImage(image: File) {
   return post<any, string>("upload", formData, { "Content-Type": "multipart/form-data" });
 }
 
+export const signInWithGoogle = async (response: any) => {
+  return post<{ token: string }, string>("auth/google", { token: response });
+};
 export async function me() {
   return get<User>("auth/me");
 }

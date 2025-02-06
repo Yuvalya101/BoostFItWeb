@@ -1,4 +1,4 @@
-import { _delete, get, post } from ".";
+import { _delete, get, post, put } from ".";
 import { Comment, Post } from "../types";
 
 export function getPosts() {
@@ -9,7 +9,7 @@ export function createPost(postData: Omit<Post, "_id">) {
   return post<Omit<Post, "_id">, Post>("/posts", postData);
 }
 export function updatePost(postId: string, postData: Partial<Omit<Post, "_id">>) {
-  return post<Partial<Omit<Post, "_id">>, Post>(`/posts/${postId}`, postData);
+  return put<Partial<Omit<Post, "_id">>, Post>(`/posts/${postId}`, postData);
 }
 
 export function likePost(postId: string) {

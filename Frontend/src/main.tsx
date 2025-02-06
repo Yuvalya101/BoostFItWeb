@@ -7,11 +7,15 @@ import { AuthContextProvider } from "./context/Auth.context.tsx";
 import { ToastContainer } from "react-toastify";
 import { PostContextProvider } from "./context/PostContext.tsx";
 
+import { GoogleOAuthProvider } from "@react-oauth/google";
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <AuthContextProvider>
       <PostContextProvider>
+      <GoogleOAuthProvider clientId="677393329604-k7bkd7mgf0e68k1kju9majds9rblthjg.apps.googleusercontent.com">
+
         <App />
+        </GoogleOAuthProvider>
       </PostContextProvider>
     </AuthContextProvider>
     <ToastContainer />

@@ -12,6 +12,7 @@
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
+
 form input {
   border: 1px solid lightgray;
   padding: 0.5rem;
@@ -27,7 +28,7 @@ form div label {
   margin-block: 0.2rem;
 }
 
-form div span {
+form div .span {
   text-align: start;
   font-size: 12px;  
   padding-block:.25rem;

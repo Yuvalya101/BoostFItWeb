@@ -3,6 +3,7 @@ import { UserLoginValidationScheme } from "../validations";
 import { useUser } from "../context/Auth.context";
 import { ZodEffects, ZodError } from "zod";
 import { toast } from "react-toastify";
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Login() {
   const [errors, setErrors] = useState(
@@ -13,7 +14,7 @@ export default function Login() {
   );
   const [serverError, setServerError] = useState<string | undefined>();
 
-  const { login } = useUser();
+  const { login, loginWithGoogle } = useUser();
   async function onSubmitLogin(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrors(
@@ -27,7 +28,7 @@ export default function Login() {
     try {
       const validatedData = UserLoginValidationScheme.parse(data);
       await login(validatedData);
-      toast("Welcome back!")
+      toast("Welcome back!");
     } catch (e: any) {
       if (e instanceof ZodError) {
         const newErrors = new Map();
@@ -42,6 +43,16 @@ export default function Login() {
       }
     }
   }
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    // Send the token to your backend for verification
+    try {
+      await loginWithGoogle(credentialResponse.credential);
+      toast("Welcome back!");
+    } catch (e: any) {
+      toast.error("Google login failed");
+      setServerError(e.message);
+    }
+  };
 
   return (
     <div>
@@ -49,15 +60,24 @@ export default function Login() {
         <div>
           <label>Email address:</label>
           <input name="email" required placeholder="Enter email address" />
-          <span>{errors.get("email")}</span>
+          <span className="span">{errors.get("email")}</span>
         </div>
         <div>
           <label>Password:</label>
           <input name="password" required placeholder="Enter Password" />
-          <span>{errors.get("password")}</span>
+          <span className="span">{errors.get("password")}</span>
         </div>
-        <span className="h-[20px] text-center w-fit block mx-auto text-[12px] text-[red] font-bold">{serverError}</span>
+        <span className="span h-[20px] text-center w-fit block mx-auto text-[12px] text-[red] font-bold">
+          {serverError}
+        </span>
         <button>Login</button>
+        <div className="google-sign-in">
+          <GoogleLogin
+            size="large"
+            onSuccess={handleGoogleSuccess}
+            onError={() => toast.error("Google login failed")}
+          />
+        </div>
       </form>
     </div>
   );

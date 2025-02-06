@@ -8,6 +8,8 @@ import SideBar from "./components/Sidebar";
 import { useUser } from "./context/Auth.context";
 import Create from "./pages/Create";
 import Toolbar from "./components/Toolbar";
+import MyPosts from "./pages/MyPosts";
+import Proflie from "./pages/Profile";
 function App() {
   const { token, user } = useUser();
 
@@ -24,7 +26,10 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
             </Route>
+            <Route path="/create/:editId" element={<Create />} />
             <Route path="/create" element={<Create />} />
+            <Route path="/profile" element={<Proflie />} />
+            <Route path="/my-posts" element={<MyPosts />} />
           </Routes>
         </div>
       </div>

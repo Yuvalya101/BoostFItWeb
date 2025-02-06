@@ -7,6 +7,7 @@ export interface IAuthContext {
   token: string | null | undefined;
   loading: boolean;
   login: (data: UserLogin) => Promise<void>;
+  loginWithGoogle: (googleToken: any) => Promise<void>;
   register: (data: UserRegistration) => Promise<void>;
   logout: () => Promise<void>;
   addPost: (post: Post) => void;
@@ -85,6 +86,18 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
       setLoading(false);
     }
   }
+  async function loginWithGoogle(googleToken: any) {
+    try {
+      setLoading(true);
+      const token = await AuthService.signInWithGoogle(googleToken);
+      localStorage.setItem("token", token);
+      setToken(token);
+    } catch (e) {
+      throw e;
+    } finally {
+      setLoading(false);
+    }
+  }
   async function register(data: UserRegistration) {
     try {
       setLoading(true);
@@ -107,6 +120,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
         user,
         token,
         login,
+        loginWithGoogle,
         register,
         logout,
         loading,

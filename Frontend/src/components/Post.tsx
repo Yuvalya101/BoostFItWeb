@@ -1,12 +1,17 @@
 import { useMemo, useRef, useState } from "react";
 import { Comment as CommentType, Post as PostType, User } from "../types";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import Edit from "@mui/icons-material/Edit";
+import Delete from "@mui/icons-material/Delete";
+
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { useUser } from "../context/Auth.context";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { usePosts } from "../context/PostContext";
 import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 const Comment = ({ c }: { c: CommentType }) => {
   return (
     <div className="flex flex-row gap-2">
@@ -82,8 +87,11 @@ const PostCommentsDialog = function ({
     </div>
   );
 };
-export default function Post({ p }: { p: PostType }) {
+
+export default function Post({ p, owned }: { p: PostType; owned?: boolean }) {
   const { user } = useUser();
+  const postActions = usePosts();
+  const nav = useNavigate();
   const [showing, setShowing] = useState(false);
   const { likePost, unlikePost } = usePosts();
   const date = useMemo(() => {
@@ -91,31 +99,51 @@ export default function Post({ p }: { p: PostType }) {
     return d.toLocaleDateString("he-il") + " " + d.getHours() + ":" + d.getMinutes();
   }, [p]);
   const isLiked = useMemo(() => p.likes.includes(user?._id as string), [p, user]);
+
+  const deletePost = async () => {
+    const confirmed = window.confirm("Are you sure you want to delete this post?");
+    if (!confirmed) return;
+    await postActions.deletePost(p._id);
+    toast("Post deleted");
+  };
   return (
     <div>
       <PostCommentsDialog post={p} showing={showing} close={() => setShowing(false)} />
       <div className="p-2 flex flex-col w-fit z-[999]">
-        <label className="font-bold"> {(p.user as User).name}</label>
+        <label className="font-bold"> {owned ? user?.name : (p.user as User).name}</label>
         <img src={p.image} width={300} />
         <span className="py-2 font-extralight max-w-[320px]">{p.content}</span>
         <span className="text-[gray] text-[12px] self-end">{date}</span>
-        <div className="flex flex-row items-center justify-between pt-2">
-          <span>{p.likes.length} Likes</span>
-          <div className="flex flex-row items-center gap-2">
-            {isLiked && <span className="text-[gray] text-[12px]">You liked this post</span>}
-            <div className="translate-y-[2px] cursor-pointer" onClick={() => setShowing(true)}>
-              <ChatBubbleOutlineIcon />
-            </div>
-
-            <div onClick={() => (isLiked ? unlikePost(p._id) : likePost(p._id))}>
-              {isLiked ? (
-                <ThumbUpIcon className="cursor-pointer" />
-              ) : (
-                <ThumbUpOffAltIcon className="cursor-pointer" />
-              )}
+        {owned ? (
+          <div className="flex flex-row items-center justify-between pt-2">
+            <div className="flex flex-row gap-1 items-center">
+              <div onClick={() => nav(`/create/${p._id}`)}>
+                <Edit className="cursor-pointer" color="primary" />
+              </div>
+              <div onClick={deletePost}>
+                <Delete className="cursor-pointer" color="warning" />
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex flex-row items-center justify-between pt-2">
+            <span>{p.likes.length} Likes</span>
+            <div className="flex flex-row items-center gap-2">
+              {isLiked && <span className="text-[gray] text-[12px]">You liked this post</span>}
+              <div className="translate-y-[2px] cursor-pointer" onClick={() => setShowing(true)}>
+                <ChatBubbleOutlineIcon />
+              </div>
+
+              <div onClick={() => (isLiked ? unlikePost(p._id) : likePost(p._id))}>
+                {isLiked ? (
+                  <ThumbUpIcon className="cursor-pointer" />
+                ) : (
+                  <ThumbUpOffAltIcon className="cursor-pointer" />
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
