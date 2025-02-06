@@ -5,6 +5,39 @@ import {
 } from "../validation/user.validation";
 import { encryptJWT } from "../utils";
 import * as UserService from "../services/user.service";
+import { OAuth2Client } from "google-auth-library";
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID!);
+
+export async function signInUserWithGoogle(req: Request, res: Response) {
+  const { token } = req.body;
+
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { sub, email, name } = payload!;
+    const existing = await UserService.findUserByEmail(email!);
+    let tokenJWT = encryptJWT({ id: existing?._id.toString(), email, name });
+    if (existing) {
+      res.json({ message: "User authenticated", status: 200, data: tokenJWT });
+      return;
+    }
+    const user = await UserService.createUser({
+      email: email!,
+      name: name ?? "Anonymous",
+      password: sub,
+      image: "",
+    });
+    tokenJWT = encryptJWT({ id: user._id.toString(), email: user.email, name: user.name });
+    // You can create or find the user in your database here
+    res.json({ message: "User authenticated", status: 200, data: tokenJWT });
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ error: "Unauthorized" });
+  }
+}
 
 export async function registerUser(req: Request, res: Response) {
   try {

@@ -2,10 +2,10 @@ import UserModel from "../models/user.model";
 import { UserRegistration } from "../validation/user.validation";
 
 export async function findUserByEmail(email: string) {
-  return await UserModel.findOne({ email });
+  return await UserModel.findOne({ email }).populate("posts");
 }
 export async function findUserById(id: string) {
-  return await UserModel.findById(id);
+  return await UserModel.findById(id).populate("posts");
 }
 
 export async function updateUser(id: string, data: Partial<UserRegistration>) {

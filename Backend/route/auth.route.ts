@@ -5,8 +5,10 @@ const router = express.Router();
 
 router.post("/register", UserController.registerUser);
 router.post("/login", UserController.loginUser);
+router.post("/login", UserController.loginUser);
+router.post("/google", UserController.signInUserWithGoogle);
 router.put("/", authMiddlware, UserController.updateUser);
 router.delete("/", authMiddlware, UserController.deleteUser);
 router.get("/me", authMiddlware, UserController.me);
 
-export default router
+export default router;
