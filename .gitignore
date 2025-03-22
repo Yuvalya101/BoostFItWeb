@@ -3,5 +3,6 @@ node_modules/
 .vscode/
 Backend/.env
 Backend/__MACOSX/
+Backend/dist/
 Frontend/node_modules
 Frontend/dist/
