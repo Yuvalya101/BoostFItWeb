@@ -2,7 +2,6 @@ import React, { use, useEffect, useState } from "react";
 import { Post, User } from "../types";
 import * as PostService from "../services/post.service";
 import { useUser } from "./Auth.context";
-import { Comment } from "../types";
 export interface IPostContext {
   posts: Post[];
   sharePost: (post: Omit<Post, "_id">) => Promise<void>;
@@ -24,7 +23,7 @@ export function PostContextProvider({ children }: { children: React.ReactNode })
   }, []);
 
   async function updatePost(postId: string, post: Partial<Omit<Post, "_id">>) {
-    const p = await PostService.updatePost(postId, post);
+    await PostService.updatePost(postId, post);
     updateUserPost(postId, post);
     setPosts(posts.map((p) => (p._id === postId ? { ...p, ...post } : p)));
   }

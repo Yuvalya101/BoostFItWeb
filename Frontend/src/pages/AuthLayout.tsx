@@ -26,7 +26,7 @@ export default function AuthLayout() {
     );
   }, [location.pathname]);
 
-  const { user, loading } = useUser();
+  const { user } = useUser();
   const nav = useNavigate();
   useEffect(() => {
     if (user) {

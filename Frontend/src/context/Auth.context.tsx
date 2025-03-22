@@ -103,6 +103,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
       setLoading(true);
       // ignore this here..
       const user = await AuthService.register(data);
+      console.log(user);
     } catch (e) {
       throw e;
     } finally {

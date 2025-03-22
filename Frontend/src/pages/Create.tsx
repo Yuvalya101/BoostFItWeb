@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { useUser } from "../context/Auth.context";
 import { uploadImage } from "../services/auth.service";
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ export default function Create() {
   const { editId } = useParams();
   const editingPost = useMemo(() => posts.find((p) => p._id === editId), [editId, posts]);
   const { user } = useUser();
-  const formRef = useRef<HTMLFormElement | null>(null);
+  //const formRef = useRef<HTMLFormElement | null>(null);
   const [image, setImage] = useState<File>();
   const nav = useNavigate();
   const [content, setContent] = useState<string>(editingPost?.content || "");

@@ -6,12 +6,13 @@ import Post from "../components/Post";
 import { Post as PostType } from "../types";
 
 export default function Home() {
-  const { user, logout, token } = useUser();
+  const { user, token } = useUser();
   const { posts } = usePosts();
   const nav = useNavigate();
 
   const [page, setPage] = useState(1);
-  const [itemsInPage, setItemsInPage] = useState(3);
+  //const [itemsInPage, setItemsInPage] = useState(3);
+  const itemsInPage = 3;
   const paging = useMemo(() => {
     const AllPages = Math.ceil(posts.length / itemsInPage);
     let pages: Array<Array<PostType>> = [];
