@@ -12,7 +12,8 @@ createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <AuthContextProvider>
       <PostContextProvider>
-      <GoogleOAuthProvider clientId="677393329604-k7bkd7mgf0e68k1kju9majds9rblthjg.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId="260438061879-s58d32i39i0iurdtfcvvai4je48nsjh6.apps.googleusercontent.com
+">
 
         <App />
         </GoogleOAuthProvider>
