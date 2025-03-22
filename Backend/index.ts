@@ -7,7 +7,8 @@ dotenv.config();
 app.listen(8080, () => {
   console.log("Listening on port 8080");
 
-  connectToDatabase(false /* Not in test mode */)
+  // switch to false here in production
+  connectToDatabase(true /* Not in test mode */)
     .then(() => {
       console.log("Connected to mongodb");
     })

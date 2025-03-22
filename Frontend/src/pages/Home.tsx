@@ -60,7 +60,7 @@ export default function Home() {
           Next
         </button>
       </div>
-      <div className="overflow-scroll max-h-[800px]">
+      <div className="overflow-scroll max-h-[500px]">
         {paging[page - 1]?.map((p) => (p ? <Post key={p._id} p={p} /> : null))}
       </div>
       

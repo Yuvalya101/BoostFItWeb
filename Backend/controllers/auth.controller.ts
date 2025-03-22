@@ -19,6 +19,7 @@ export async function signInUserWithGoogle(req: Request, res: Response) {
     const payload = ticket.getPayload();
     const { sub, email, name } = payload!;
     const existing = await UserService.findUserByEmail(email!);
+
     let tokenJWT = encryptJWT({ id: existing?._id.toString(), email, name });
     if (existing) {
       res.json({ message: "User authenticated", status: 200, data: tokenJWT });
@@ -30,7 +31,11 @@ export async function signInUserWithGoogle(req: Request, res: Response) {
       password: sub,
       image: "",
     });
-    tokenJWT = encryptJWT({ id: user._id.toString(), email: user.email, name: user.name });
+    tokenJWT = encryptJWT({
+      id: user._id.toString(),
+      email: user.email,
+      name: user.name,
+    });
     // You can create or find the user in your database here
     res.json({ message: "User authenticated", status: 200, data: tokenJWT });
   } catch (error) {
@@ -57,7 +62,9 @@ export async function registerUser(req: Request, res: Response) {
       status: 201,
     });
   } catch (e: any) {
-    res.status(400).json({ error: e, message: e.message, data: null, status: 400 });
+    res
+      .status(400)
+      .json({ error: e, message: e.message, data: null, status: 400 });
   }
 }
 
@@ -84,7 +91,9 @@ export async function loginUser(req: Request, res: Response) {
       data: token,
     });
   } catch (e: any) {
-    res.status(400).json({ error: e, message: e.message, data: null, status: 400 });
+    res
+      .status(400)
+      .json({ error: e, message: e.message, data: null, status: 400 });
   }
 }
 
@@ -101,7 +110,9 @@ export async function me(req: Request, res: Response) {
       data: user,
     });
   } catch (e: any) {
-    res.status(500).json({ error: e, message: e.message, data: null, status: 500 });
+    res
+      .status(500)
+      .json({ error: e, message: e.message, data: null, status: 500 });
   }
 }
 
@@ -116,7 +127,9 @@ export async function updateUser(req: Request, res: Response) {
       data: user,
     });
   } catch (e: any) {
-    res.status(400).json({ error: e, message: e.message, data: null, status: 400 });
+    res
+      .status(400)
+      .json({ error: e, message: e.message, data: null, status: 400 });
   }
 }
 
@@ -130,6 +143,8 @@ export async function deleteUser(req: Request, res: Response) {
       data: user,
     });
   } catch (e: any) {
-    res.status(400).json({ error: e, message: e.message, data: null, status: 400 });
+    res
+      .status(400)
+      .json({ error: e, message: e.message, data: null, status: 400 });
   }
 }

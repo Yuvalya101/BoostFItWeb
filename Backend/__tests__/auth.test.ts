@@ -2,7 +2,6 @@ import app from "../app";
 import connectToDatabase from "../database";
 import request from "supertest";
 import UserModel from "../models/user.model";
-import PostModel from "../models/post.model";
 
 describe("POST /auth/register", () => {
   let connection: typeof import("mongoose");
@@ -10,7 +9,6 @@ describe("POST /auth/register", () => {
     connection = await connectToDatabase(true /* In test mode */);
     // Clear Users in database before testing
     await UserModel.deleteMany({});
-    await PostModel.deleteMany({});
   });
   it("returns status code 201 if register succeeds", async () => {
     const res = await request(app).post("/auth/register").send({
@@ -44,11 +42,7 @@ describe("POST /auth/register", () => {
 
 let token: string;
 
-async function registerAndLogin() {
-  await request(app).post("/auth/register").send({
-    email: "test@gmail.com",
-    password: "123456Aa!",
-  });
+async function login() {
   let res = await request(app).post("/auth/login").send({
     email: "test@gmail.com",
     password: "123456Aa!",
@@ -60,15 +54,8 @@ describe("POST /auth/login", () => {
   let connection: typeof import("mongoose");
   beforeAll(async () => {
     connection = await connectToDatabase(true /* In test mode */);
-    // Clear Users in database before testing
-    await UserModel.deleteMany({});
-    await PostModel.deleteMany({});
   });
   it("returns status code 200 if login succeeds", async () => {
-    await request(app).post("/auth/register").send({
-      email: "test@gmail.com",
-      password: "123456Aa!",
-    });
     const res = await request(app).post("/auth/login").send({
       email: "test@gmail.com",
       password: "123456Aa!",
@@ -94,13 +81,12 @@ describe("GET /auth/me", () => {
   let connection: typeof import("mongoose");
   beforeAll(async () => {
     connection = await connectToDatabase(true /* In test mode */);
-    // Clear Users in database before testing
-    await UserModel.deleteMany({});
-    await PostModel.deleteMany({});
   });
   it("returns status code 200 if user details fetch succeeds", async () => {
-    registerAndLogin();
-    const res = await request(app).get("/auth/me").set("Authorization", `Bearer ${token}`);
+    await login();
+    const res = await request(app)
+      .get("/auth/me")
+      .set("Authorization", `Bearer ${token}`);
     expect(res.statusCode).toEqual(200);
   });
 
@@ -113,15 +99,15 @@ describe("PUT /auth", () => {
   let connection: typeof import("mongoose");
   beforeAll(async () => {
     connection = await connectToDatabase(true /* In test mode */);
-    // Clear Users in database before testing
-    await UserModel.deleteMany({});
-    await PostModel.deleteMany({});
   });
   it("returns status code 200 if user details update succeeds", async () => {
-    registerAndLogin();
-    const res = await request(app).put("/auth").set("Authorization", `Bearer ${token}`).send({
-      name: "Hagit",
-    });
+    await login();
+    const res = await request(app)
+      .put("/auth")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        name: "Hagit",
+      });
     expect(res.statusCode).toEqual(200);
   });
 
@@ -134,13 +120,12 @@ describe("DELETE /auth", () => {
   let connection: typeof import("mongoose");
   beforeAll(async () => {
     connection = await connectToDatabase(true /* In test mode */);
-    // Clear Users in database before testing
-    await UserModel.deleteMany({});
-    await PostModel.deleteMany({});
   });
   it("returns status code 200 if user is deleted successfully", async () => {
-    registerAndLogin();
-    const res = await request(app).delete("/auth").set("Authorization", `Bearer ${token}`);
+    await login();
+    const res = await request(app)
+      .delete("/auth")
+      .set("Authorization", `Bearer ${token}`);
     expect(res.statusCode).toEqual(200);
   });
 

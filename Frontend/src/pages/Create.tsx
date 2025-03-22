@@ -70,6 +70,9 @@ export default function Create() {
           placeholder="post content"
           className="p-2 border-[1px] border-[lightgray] min-h-[100px]"
         />
+        <button onClick={onSubmitPost} className="ml-auto self-end border-black">
+        {editingPost ? "Save changes" : "Share"}
+      </button>
       </form>
 
       {((image && content) || editingPost) && (
@@ -85,9 +88,8 @@ export default function Create() {
           <span>0 Likes</span>
         </div>
       )}
-      <button onClick={onSubmitPost} className="ml-auto self-end border-black">
-        {editingPost ? "Save changes" : "Share"}
-      </button>
+      
+      
     </div>
   );
 }

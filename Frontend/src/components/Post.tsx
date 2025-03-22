@@ -107,7 +107,7 @@ export default function Post({ p, owned }: { p: PostType; owned?: boolean }) {
     toast("Post deleted");
   };
   return (
-    <div>
+    <>
       <PostCommentsDialog post={p} showing={showing} close={() => setShowing(false)} />
       <div className="p-2 flex flex-col w-fit z-[999]">
         <label className="font-bold"> {owned ? user?.name : (p.user as User).name}</label>
@@ -145,6 +145,6 @@ export default function Post({ p, owned }: { p: PostType; owned?: boolean }) {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }

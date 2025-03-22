@@ -2,7 +2,12 @@ import UserModel from "../models/user.model";
 import { UserRegistration } from "../validation/user.validation";
 
 export async function findUserByEmail(email: string) {
-  return await UserModel.findOne({ email }).populate("posts");
+  try {
+    return await UserModel.findOne({ email }).populate("posts");
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
 }
 export async function findUserById(id: string) {
   return await UserModel.findById(id).populate("posts");

@@ -17,7 +17,9 @@ export async function likePost(request: Request, response: Response) {
       data: post,
     });
   } catch (error: any) {
-    response.status(400).json({ error, message: error.message, data: null, status: 400 });
+    response
+      .status(400)
+      .json({ error, message: error.message, data: null, status: 400 });
   }
 }
 
@@ -33,7 +35,9 @@ export async function unlikePost(request: Request, response: Response) {
       data: post,
     });
   } catch (error: any) {
-    response.status(400).json({ error, message: error.message, data: null, status: 400 });
+    response
+      .status(400)
+      .json({ error, message: error.message, data: null, status: 400 });
   }
 }
 export async function createPost(request: Request, response: Response) {
@@ -48,7 +52,9 @@ export async function createPost(request: Request, response: Response) {
       data: post,
     });
   } catch (error: any) {
-    response.status(400).json({ error, message: error.message, data: null, status: 400 });
+    response
+      .status(400)
+      .json({ error, message: error.message, data: null, status: 400 });
   }
 }
 
@@ -60,12 +66,14 @@ export async function commentPost(request: Request, response: Response) {
     const post = await PostService.commentPost(postId, user, content);
     response.status(200).json({
       error: null,
-      status:200,
+      status: 200,
       message: "Post updated successfully",
       data: post,
     });
   } catch (error: any) {
-    response.status(400).json({ error, message: error.message, data: null, status: 400 });
+    response
+      .status(400)
+      .json({ error, message: error.message, data: null, status: 400 });
   }
 }
 
@@ -77,12 +85,14 @@ export async function updatePost(request: Request, response: Response) {
     const post = await PostService.updatePost(postId, validatedData);
     response.status(200).json({
       error: null,
-      status:200,
+      status: 200,
       message: "Post updated successfully",
       data: post,
     });
   } catch (error: any) {
-    response.status(400).json({ error, message: error.message, data: null, status: 400 });
+    response
+      .status(400)
+      .json({ error, message: error.message, data: null, status: 400 });
   }
 }
 
@@ -97,7 +107,9 @@ export async function deletePost(request: Request, response: Response) {
       data: post,
     });
   } catch (error: any) {
-    response.status(400).json({ error, message: error.message, data: null, status: 400 });
+    response
+      .status(400)
+      .json({ error, message: error.message, data: null, status: 400 });
   }
 }
 
@@ -111,13 +123,15 @@ export async function getPosts(request: Request, response: Response) {
       data: posts,
     });
   } catch (error: any) {
-    response.status(400).json({ error, message: error.message, data: null, status: 400 });
+    response
+      .status(400)
+      .json({ error, message: error.message, data: null, status: 400 });
   }
 }
 
 export async function getUserPosts(request: Request, response: Response) {
   try {
-    const userId = request.params.id;
+    const userId = request.params.id.replace("{", "").replace("}", "");
     const posts = await PostService.findPostsByUserId(userId);
     response.status(200).json({
       error: null,
@@ -126,7 +140,10 @@ export async function getUserPosts(request: Request, response: Response) {
       data: posts,
     });
   } catch (error: any) {
-    response.status(400).json({ error, message: error.message, data: null, status: 400 });
+    console.log(error);
+    response
+      .status(400)
+      .json({ error, message: error.message, data: null, status: 400 });
   }
 }
 
@@ -141,6 +158,8 @@ export async function getPost(request: Request, response: Response) {
       data: post,
     });
   } catch (error: any) {
-    response.status(400).json({ error, message: error.message, data: null, status: 400 });
+    response
+      .status(400)
+      .json({ error, message: error.message, data: null, status: 400 });
   }
 }

@@ -46,7 +46,10 @@ describe("POST /posts", () => {
       password: "123456Aa!",
     });
     token = res.body.data;
-    res = await request(app).get("/auth/me").send();
+    res = await request(app)
+      .get("/auth/me")
+      .set("Authorization", `Bearer ${token}`)
+      .send();
     userId = res.body.data._id;
     res = await request(app)
       .post("/posts")
@@ -67,9 +70,6 @@ describe("GET /posts/user", () => {
   let connection: typeof import("mongoose");
   beforeAll(async () => {
     connection = await connectToDatabase(true /* In test mode */);
-    // Clear Users in database before testing
-    await PostModel.deleteMany({});
-    await UserModel.deleteMany({});
   });
   it("returns status code 200 if user posts fetched successfully", async () => {
     let res = await request(app).get(`/posts/user/${userId}}`).send();
