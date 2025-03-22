@@ -1,0 +1,4 @@
+MONGO_URI_TEST = mongodb://localhost:27017/yuval_db_test
+MONGO_URI = mongodb://localhost:27017/yuval_db_prod
+JWT_SECRET= kawabanga
+NODE_ENV = PRODUCTION
