@@ -1,9 +1,11 @@
 import dotenv from "dotenv";
 import connectToDatabase from "./database";
 import app from "./app";
+import { setupSwagger } from "./swagger";
 
 dotenv.config();
 
+setupSwagger(app);
 app.listen(8080, () => {
   console.log("Listening on port 8080");
 

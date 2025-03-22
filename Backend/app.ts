@@ -5,6 +5,11 @@ import authRouter from "./route/auth.route";
 import postsRouter from "./route/posts.route";
 import fs from "fs";
 import cors from "cors";
+import { setupSwagger } from './swagger';
+
+
+
+
 // Express app
 // Ensure the /images directory exists
 const imagesDir = path.join(__dirname, "images");
@@ -13,6 +18,8 @@ if (!fs.existsSync(imagesDir)) {
 }
 const app = express();
 // Multer for image uploading
+setupSwagger(app);
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, imagesDir); // Save in the specified directory
