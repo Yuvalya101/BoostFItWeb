@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.ts",
-    "prod": "cp .envProduction .env && tsc -p tsconfig_prod.json && pm2 restart ecosystem.config.js --env production",
+    "prod": "cp .envProduction .env && tsc -p tsconfig.prod.json && pm2 restart ecosystem.config.js --env production",
     "test": "jest --forceExit"
   },
   "keywords": [],
